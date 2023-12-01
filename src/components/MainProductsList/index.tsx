@@ -36,9 +36,6 @@ export default function MainProductsList({ products }: MainProductsListProps) {
             key={product.id}
             href={{
               pathname: `/${product.id}`,
-              query: {
-                id: product.id,
-              },
             }}
             className={twMerge(
               'rounded-lg cursor-pointer relative overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1ea483] to-[#7465d4] group',

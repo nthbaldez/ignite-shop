@@ -1,7 +1,13 @@
 import { stripe } from '@/lib/stripe'
 import { formatPrice } from '@/utils/formatter'
+import { Metadata } from 'next'
 import Image from 'next/image'
 import Stripe from 'stripe'
+
+export const metadata: Metadata = {
+  title: '',
+  description: '',
+}
 
 const getProduct = async (productId: string) => {
   const product = await stripe.products.retrieve(productId, {
@@ -10,16 +16,44 @@ const getProduct = async (productId: string) => {
 
   const price = product.default_price as Stripe.Price
 
+  metadata.title = product.name
+
   return {
     name: product.name,
     imageURL: product.images[0],
     price: price.unit_amount && formatPrice.format(price.unit_amount / 100),
+    description: product.description,
   }
 }
 
-export default async function Product({ searchParams }: any) {
-  const { id } = searchParams
-  const { name, imageURL, price } = await getProduct(id)
+export async function generateStaticParams() {
+  const response = await stripe.products.list({
+    expand: ['data.default_price'],
+  })
+
+  const products = response.data.map((product) => {
+    const price = product.default_price as Stripe.Price
+
+    return {
+      id: product.id,
+      name: product.name,
+      imageURL: product.images[0],
+      price: price.unit_amount && formatPrice.format(price.unit_amount / 100),
+      description: product.description,
+    }
+  })
+
+  return products
+}
+
+export default async function Product({
+  params,
+}: {
+  params: { product: string }
+}) {
+  const { name, imageURL, price, description } = await getProduct(
+    params.product,
+  )
 
   return (
     <main className="grid grid-cols-2 items-stretch gap-16 max-w-[1180px] mx-auto">
@@ -37,15 +71,7 @@ export default async function Product({ searchParams }: any) {
         <h1 className="text-3xl text-gray300">{name}</h1>
         <span className="mt-4 block text-3xl text-green300">{price}</span>
 
-        <p className="mt-10 text-lg leading-8 text-gray300">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quidem
-          similique perspiciatis excepturi aliquid aut quae dolores aliquam
-          maiores? Blanditiis exercitationem impedit illum eveniet provident
-          repellendus earum eos autem quasi cum! Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Nulla sed quo est debitis at ipsam unde
-          recusandae pariatur sunt laboriosam hic voluptate ducimus voluptas,
-          facilis nihil rerum molestiae qui error.
-        </p>
+        <p className="mt-10 text-lg leading-8 text-gray300">{description}</p>
 
         <button className="mt-auto bg-green500 border-0 text-white rounded-lg p-[1.25rem] cursor-pointer font-bold hover:bg-green300">
           Comprar

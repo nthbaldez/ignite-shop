@@ -2,9 +2,8 @@ import MainProductsList from '@/components/MainProductsList'
 import Stripe from 'stripe'
 import { stripe } from '@/lib/stripe'
 import { formatPrice } from '@/utils/formatter'
-import { cache } from 'react'
 
-const getProducts = cache(async () => {
+const getProducts = async () => {
   const response = await stripe.products.list({
     expand: ['data.default_price'],
   })
@@ -21,7 +20,7 @@ const getProducts = cache(async () => {
   })
 
   return products
-})
+}
 
 export const revalidate = 3600
 
