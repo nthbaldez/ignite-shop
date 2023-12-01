@@ -34,9 +34,9 @@ export default function MainProductsList({ products }: MainProductsListProps) {
         return (
           <Link
             key={product.id}
-            href="/"
+            href="/product"
             className={twMerge(
-              'rounded-lg cursor-pointer relative overflow-hidden flex items-center justify-center bg-[linear-gradient(180deg, #1ea483 0%, #7465d4 100%)] bg-gradient-to-b from-[#1ea483] to-[#7465d4] group',
+              'rounded-lg cursor-pointer relative overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1ea483] to-[#7465d4] group',
               'keen-slider__slide',
             )}
           >
