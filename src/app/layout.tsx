@@ -4,6 +4,7 @@ import './globals.css'
 import Image from 'next/image'
 import LogoImg from '../assets/logoImg.svg'
 import Link from 'next/link'
+import { PiHandbag } from 'react-icons/pi'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -24,10 +25,14 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <div className="flex flex-col items-start justify-center h-screen">
-          <header className="w-full py-[2rem] max-w-[1180px] mx-auto">
+          <header className="w-full py-[2rem] max-w-[1180px] mx-auto flex items-center justify-between">
             <Link href="/">
               <Image src={LogoImg} alt="" />
             </Link>
+
+            <div className="relative bg-[#202024] p-3 rounded-lg">
+              <PiHandbag size={30} />
+            </div>
           </header>
           {children}
         </div>

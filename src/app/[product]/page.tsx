@@ -64,7 +64,7 @@ export default async function Product({
           onClick={handleBuyProduct}
           className="mt-auto bg-green500 border-0 text-white rounded-lg p-[1.25rem] cursor-pointer font-bold hover:bg-green300 disabled:opacity-75 disabled:cursor-not-allowed"
         >
-          Comprar agora
+          Colocar na sacola
         </button>
       </div>
     </main>

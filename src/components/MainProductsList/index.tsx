@@ -4,6 +4,7 @@ import { useKeenSlider } from 'keen-slider/react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
+import { PiHandbag } from 'react-icons/pi'
 
 interface Product {
   id: string
@@ -52,10 +53,16 @@ export default function MainProductsList({ products }: MainProductsListProps) {
             />
 
             <footer className="absolute bottom-[0.25rem] left-[0.25rem] right-[0.25rem] p-[2rem] rounded-md flex items-center justify-between translate-y-[110%] transition-all ease-in-out delay-2000 group-hover:opacity-1 group-hover:translate-y-[0%] bg-[#000]/[0.6]">
-              <strong className="text-xl text-gray100">{product.name}</strong>
-              <span className="text-2xl font-bold text-green300">
-                {product.price}
-              </span>
+              <div className="flex flex-col justify-start">
+                <strong className="text-xl text-gray100">{product.name}</strong>
+                <span className="text-2xl font-bold text-green300">
+                  {product.price}
+                </span>
+              </div>
+
+              <div className="bg-green500 p-3 rounded-md">
+                <PiHandbag size={28} />
+              </div>
             </footer>
           </Link>
         )
