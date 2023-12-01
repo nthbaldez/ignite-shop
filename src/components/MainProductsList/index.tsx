@@ -41,6 +41,7 @@ export default function MainProductsList({ products }: MainProductsListProps) {
               'rounded-lg cursor-pointer relative overflow-hidden flex items-center justify-center bg-gradient-to-b from-[#1ea483] to-[#7465d4] group',
               'keen-slider__slide',
             )}
+            prefetch={false}
           >
             <Image
               src={product.imageURL}
