@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 import Image from 'next/image'
 import LogoImg from '../assets/logoImg.svg'
+import Link from 'next/link'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -24,7 +25,9 @@ export default function RootLayout({
       <body className={roboto.className}>
         <div className="flex flex-col items-start justify-center h-screen">
           <header className="w-full py-[2rem] max-w-[1180px] mx-auto">
-            <Image src={LogoImg} alt="" />
+            <Link href="/">
+              <Image src={LogoImg} alt="" />
+            </Link>
           </header>
           {children}
         </div>
