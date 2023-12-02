@@ -34,17 +34,22 @@ export function CartProvider({ children }: CartProviderProps) {
   async function addProduct(productId: string) {
     try {
       const updatedCart = [...cart]
+      const findProduct = updatedCart.find(
+        (product) => product.id === productId,
+      )
 
-      const product = await getProduct(productId)
+      if (!findProduct) {
+        const product = await getProduct(productId)
 
-      if (product) {
-        updatedCart.push({
-          ...product,
-          id: productId,
-        })
+        if (product) {
+          updatedCart.push({
+            ...product,
+            id: productId,
+          })
+        }
+        setCart(updatedCart)
+        setItem(updatedCart)
       }
-      setCart(updatedCart)
-      setItem(updatedCart)
     } catch {
       toast.error('Erro na adição do produto')
     }

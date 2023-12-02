@@ -2,6 +2,7 @@
 
 import { useCart } from '@/hooks/useCart'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 
 interface Product {
   id: string
@@ -20,7 +21,7 @@ export default function ProductComponent({ product }: ProductComponentProps) {
   const { name, price, description, defaultPriceId, imageURL, id } = product
 
   const { addProduct } = useCart()
-
+  const router = useRouter()
   // async function handleBuyProduct() {
   //   try {
   //     const response = await axios.post('/api/checkout', {
@@ -37,6 +38,7 @@ export default function ProductComponent({ product }: ProductComponentProps) {
   async function handleAddProductToCart() {
     console.log('chegou aqui')
     await addProduct(id)
+    router.push('/')
   }
 
   return (
