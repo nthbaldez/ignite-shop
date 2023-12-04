@@ -4,9 +4,9 @@ import { stripe } from '../../../lib/stripe'
 const URL = process.env.NEXT_URL || 'https://localhost:3000'
 
 export async function POST(req: Request) {
-  const { priceId } = await req.json()
+  const { priceIds } = await req.json()
 
-  if (!priceId) {
+  if (!priceIds) {
     NextResponse.json({ status: 400 })
   }
 
@@ -17,12 +17,7 @@ export async function POST(req: Request) {
     success_url: successUrl,
     cancel_url: cancelUrl,
     mode: 'payment',
-    line_items: [
-      {
-        price: priceId,
-        quantity: 1,
-      },
-    ],
+    line_items: priceIds,
   })
 
   return NextResponse.json(

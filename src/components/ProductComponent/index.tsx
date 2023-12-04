@@ -19,25 +19,12 @@ interface ProductComponentProps {
 }
 
 export default function ProductComponent({ product }: ProductComponentProps) {
-  const { name, price, description, defaultPriceId, imageURL, id } = product
+  const { name, price, description, imageURL, id } = product
 
   const { addProduct } = useCart()
   const router = useRouter()
-  // async function handleBuyProduct() {
-  //   try {
-  //     const response = await axios.post('/api/checkout', {
-  //       priceId: defaultPriceId,
-  //     })
-
-  //     const { checkoutUrl } = response.data
-  //     window.location.href = checkoutUrl
-  //   } catch (err) {
-  //     alert('Houve algum erro')
-  //   }
-  // }
 
   async function handleAddProductToCart() {
-    console.log('chegou aqui')
     await addProduct(id)
     router.push('/')
   }

@@ -5,9 +5,14 @@ import { toast } from 'react-toastify'
 import { Product } from '../types'
 import { setItem } from '../utils/set-item'
 import { getProduct } from '@/services/get-products'
+import axios from 'axios'
 
 interface CartProviderProps {
   children: ReactNode
+}
+interface PriceIdsProps {
+  price: string
+  quantity: number
 }
 
 interface CartContextData {
@@ -15,19 +20,18 @@ interface CartContextData {
   totalValue: number
   addProduct: (productId: string) => Promise<void>
   removeProduct: (productId: string) => void
+  handleBuyProduct: (listIds: PriceIdsProps[]) => void
 }
 
 const CartContext = createContext<CartContextData>({} as CartContextData)
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Product[]>(() => {
-    // if (typeof window !== 'undefined') {
     const storagedCart = localStorage.getItem('@ignite-shop:cart')
 
     if (storagedCart) {
       return JSON.parse(storagedCart)
     }
-    // }
 
     return []
   })
@@ -82,9 +86,22 @@ export function CartProvider({ children }: CartProviderProps) {
     }
   }
 
+  async function handleBuyProduct(defaultPriceIds: PriceIdsProps[]) {
+    try {
+      const response = await axios.post('/api/checkout', {
+        priceIds: defaultPriceIds,
+      })
+
+      const { checkoutUrl } = response.data
+      window.location.href = checkoutUrl
+    } catch (err) {
+      alert('Houve algum erro')
+    }
+  }
+
   return (
     <CartContext.Provider
-      value={{ cart, addProduct, removeProduct, totalValue }}
+      value={{ cart, addProduct, removeProduct, totalValue, handleBuyProduct }}
     >
       {children}
     </CartContext.Provider>

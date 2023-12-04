@@ -9,8 +9,7 @@ import { useAside } from '@/hooks/useAside'
 
 export default function Header() {
   const { cart } = useCart()
-  const { isOpen, handleToggleAside } = useAside()
-
+  const { handleToggleAside } = useAside()
   return (
     <header className="relative w-full py-[2rem] max-w-[1180px] mx-auto flex items-center justify-between">
       <Link href="/">

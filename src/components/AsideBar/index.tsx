@@ -8,13 +8,18 @@ import { useEffect, useState } from 'react'
 import { MdClose } from 'react-icons/md'
 
 export default function AsideBar() {
-  const { cart, totalValue } = useCart()
+  const { cart, removeProduct, totalValue, handleBuyProduct } = useCart()
   const { isOpen, handleToggleAside } = useAside()
   const [open, setOpen] = useState(isOpen)
 
   useEffect(() => {
     setOpen(isOpen)
   }, [isOpen])
+
+  const priceIdsList = cart.map((product) => ({
+    price: product.defaultPriceId,
+    quantity: 1,
+  }))
 
   return (
     <aside
@@ -45,7 +50,10 @@ export default function AsideBar() {
                   <span className="text-[18px] font-semibold">
                     {formatPrice.format(product.price / 100)}
                   </span>
-                  <button className="text-green500 font-semibold">
+                  <button
+                    onClick={() => removeProduct(product.id)}
+                    className="text-green500 font-semibold"
+                  >
                     Remover
                   </button>
                 </div>
@@ -72,7 +80,10 @@ export default function AsideBar() {
             </div>
           </div>
 
-          <button className="text-center font-bold text-[18px] rounded-lg bg-green500 hover:bg-green300 py-5 px-8">
+          <button
+            onClick={() => handleBuyProduct(priceIdsList)}
+            className="text-center font-bold text-[18px] rounded-lg bg-green500 hover:bg-green300 py-5 px-8"
+          >
             Finalizar compra
           </button>
         </div>

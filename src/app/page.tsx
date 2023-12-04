@@ -14,7 +14,8 @@ const getProducts = async () => {
       id: product.id,
       name: product.name,
       imageURL: product.images[0],
-      price: price.unit_amount,
+      price: price.unit_amount ? price.unit_amount : 0,
+      defaultPriceId: price.id,
     }
   })
 

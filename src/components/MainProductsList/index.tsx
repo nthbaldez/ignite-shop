@@ -11,7 +11,7 @@ interface Product {
   id: string
   name: string
   imageURL: string
-  price: number | 0
+  price: number
 }
 interface MainProductsListProps {
   products: Product[]
