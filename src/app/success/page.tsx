@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { stripe } from '@/lib/stripe'
+import { useCart } from '@/hooks/useCart'
 
 interface Product {
   name: string
@@ -17,6 +18,8 @@ export default function Success() {
   const [products, setProducts] = useState<Product[]>([])
 
   const router = useRouter()
+
+  const { handleCart } = useCart()
 
   useEffect(() => {
     async function getSession() {
@@ -76,6 +79,7 @@ export default function Success() {
       </p>
 
       <Link
+        onClick={handleCart}
         href="/"
         className="block mt-20 text-xl text-green500 font-bold hover:text-green300"
       >
