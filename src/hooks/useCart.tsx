@@ -12,6 +12,7 @@ interface CartProviderProps {
 
 interface CartContextData {
   cart: Product[]
+  totalValue: number
   addProduct: (productId: string) => Promise<void>
   removeProduct: (productId: string) => void
 }
@@ -20,16 +21,22 @@ const CartContext = createContext<CartContextData>({} as CartContextData)
 
 export function CartProvider({ children }: CartProviderProps) {
   const [cart, setCart] = useState<Product[]>(() => {
-    if (typeof window !== 'undefined') {
-      const storagedCart = localStorage.getItem('@ignite-shop:cart')
+    // if (typeof window !== 'undefined') {
+    const storagedCart = localStorage.getItem('@ignite-shop:cart')
 
-      if (storagedCart) {
-        return JSON.parse(storagedCart)
-      }
+    if (storagedCart) {
+      return JSON.parse(storagedCart)
     }
+    // }
 
     return []
   })
+
+  const calculateTotalValue = (items: Product[]) => {
+    return items.reduce((total, item) => (total += item.price), 0)
+  }
+
+  const totalValue = calculateTotalValue(cart)
 
   async function addProduct(productId: string) {
     try {
@@ -76,7 +83,9 @@ export function CartProvider({ children }: CartProviderProps) {
   }
 
   return (
-    <CartContext.Provider value={{ cart, addProduct, removeProduct }}>
+    <CartContext.Provider
+      value={{ cart, addProduct, removeProduct, totalValue }}
+    >
       {children}
     </CartContext.Provider>
   )

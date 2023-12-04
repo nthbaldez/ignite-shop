@@ -5,12 +5,13 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { twMerge } from 'tailwind-merge'
 import { PiHandbag } from 'react-icons/pi'
+import { formatPrice } from '@/utils/formatter'
 
 interface Product {
   id: string
   name: string
   imageURL: string
-  price: string | 0 | null
+  price: number | 0 | null
 }
 interface MainProductsListProps {
   products: Product[]
@@ -56,7 +57,7 @@ export default function MainProductsList({ products }: MainProductsListProps) {
               <div className="flex flex-col justify-start">
                 <strong className="text-xl text-gray100">{product.name}</strong>
                 <span className="text-2xl font-bold text-green300">
-                  {product.price}
+                  {formatPrice.format(product.price / 100)}
                 </span>
               </div>
 

@@ -1,5 +1,4 @@
 import { stripe } from '@/lib/stripe'
-import { formatPrice } from '@/utils/formatter'
 import Stripe from 'stripe'
 
 export const getProduct = async (productId: string) => {
@@ -13,7 +12,7 @@ export const getProduct = async (productId: string) => {
     id: product.id,
     name: product.name,
     imageURL: product.images[0],
-    price: price.unit_amount && formatPrice.format(price.unit_amount / 100),
+    price: price.unit_amount ? price.unit_amount : 0,
     description: product.description,
     defaultPriceId: price.id,
   }

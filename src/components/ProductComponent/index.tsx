@@ -1,6 +1,7 @@
 'use client'
 
 import { useCart } from '@/hooks/useCart'
+import { formatPrice } from '@/utils/formatter'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 
@@ -8,7 +9,7 @@ interface Product {
   id: string
   name: string
   imageURL: string
-  price: string | 0 | null
+  price: number | 0 | null
   description: string | null
   defaultPriceId: string
 }
@@ -55,7 +56,9 @@ export default function ProductComponent({ product }: ProductComponentProps) {
 
       <div className="flex flex-col">
         <h1 className="text-3xl text-gray300">{name}</h1>
-        <span className="mt-4 block text-3xl text-green300">{price}</span>
+        <span className="mt-4 block text-3xl text-green300">
+          {formatPrice.format(price / 100)}
+        </span>
 
         <p className="mt-10 text-lg leading-8 text-gray300">{description}</p>
 
