@@ -4,6 +4,7 @@ import './globals.css'
 import { CartProvider } from '@/hooks/useCart'
 import Header from '@/components/Header'
 import AsideBar from '@/components/AsideBar'
+import { AsideProvider } from '@/hooks/useAside'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -24,11 +25,13 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <CartProvider>
-          <div className="relative flex flex-col items-start justify-center h-screen">
-            <AsideBar />
-            <Header />
-            {children}
-          </div>
+          <AsideProvider>
+            <div className="relative flex flex-col items-start justify-center h-screen overflow-hidden">
+              <AsideBar />
+              <Header />
+              {children}
+            </div>
+          </AsideProvider>
         </CartProvider>
       </body>
     </html>

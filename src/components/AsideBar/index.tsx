@@ -3,14 +3,35 @@
 import Image from 'next/image'
 import { useCart } from '@/hooks/useCart'
 import { formatPrice } from '@/utils/formatter'
+import { useAside } from '@/hooks/useAside'
+import { useEffect, useState } from 'react'
+import { MdClose } from 'react-icons/md'
 
 export default function AsideBar() {
   const { cart, totalValue } = useCart()
+  const { isOpen, handleToggleAside } = useAside()
+  const [open, setOpen] = useState(isOpen)
+
+  useEffect(() => {
+    setOpen(isOpen)
+  }, [isOpen])
 
   return (
-    <aside className="h-full w-[480px] bg-gray800 absolute right-[0px] top-0 z-50">
-      <div className="h-full flex flex-col justify-between p-[48px]">
-        <h1 className="text-[20px] font-bold">Sacola de compras</h1>
+    <aside
+      className={`h-full w-[480px] bg-gray800 absolute bottom-[0.25rem] right-[0.25rem] z-50 ${
+        open ? 'translate-x-[0%]' : 'translate-x-[110%]'
+      } transition-all ease-in-out delay-2000`}
+    >
+      <div className="h-full flex flex-col justify-between p-[48px] relative">
+        <header className="flex justify-between items-center">
+          <h1 className="text-[20px] font-bold">Sacola de compras</h1>
+          <button
+            onClick={handleToggleAside}
+            className="absolute top-6 right-6"
+          >
+            <MdClose size={24} />
+          </button>
+        </header>
 
         <div className="mt-7 overflow-y-auto">
           <ul className="flex flex-col gap-3">
