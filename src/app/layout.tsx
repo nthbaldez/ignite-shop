@@ -3,6 +3,7 @@ import { Roboto } from 'next/font/google'
 import './globals.css'
 import { CartProvider } from '@/hooks/useCart'
 import Header from '@/components/Header'
+import AsideBar from '@/components/AsideBar'
 
 const roboto = Roboto({
   subsets: ['latin'],
@@ -23,7 +24,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={roboto.className}>
         <CartProvider>
-          <div className="flex flex-col items-start justify-center h-screen">
+          <div className="relative flex flex-col items-start justify-center h-screen">
+            <AsideBar />
             <Header />
             {children}
           </div>
